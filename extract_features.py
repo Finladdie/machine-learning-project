@@ -38,14 +38,17 @@ def extractFeatures(file, n_coeffs):
 
     # Mel-Frequency Cepstral Coefficients
     MFCC = librosa.feature.mfcc(y=y_trimmed, sr=sr, n_mfcc=n_coeffs, dtype=float)
-    
-    # Root-mean-square energy = loudness variation
-    rms = librosa.feature.rms(y=y_trimmed)
 
     # Fundamental frequency f0, negative values represent lack of
     # tone, so remove them
     F0 = librosa.yin(y_trimmed, fmin=50, fmax=500)
     F0 = F0[F0>0].reshape(1, -1)
+
+    # Root-mean-square energy = loudness variation
+    rms = librosa.feature.rms(y=y_trimmed)
+
+    # Zero-crossing rate, how often signal changes sign
+    zcr = librosa.feature.zero_crossing_rate(y=y_trimmed)
 
     # Spectral centroid, "brightness"
     centroid = librosa.feature.spectral_centroid(y=y_trimmed, sr=sr)
@@ -59,7 +62,6 @@ def extractFeatures(file, n_coeffs):
     # How noisy vs tonal the sound is
     flatness = librosa.feature.spectral_flatness(y=y_trimmed)
 
-    
     """
     Add everything into single feature vector of length 15*n_coeffs+45
     """
@@ -67,6 +69,7 @@ def extractFeatures(file, n_coeffs):
         stats(MFCC, 2) +
         stats(F0, 2) +
         stats(rms, 1) +
+        stats(zcr) +
         stats(centroid) +
         stats(bandwidth) +
         stats(contrast) +

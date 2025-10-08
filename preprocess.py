@@ -7,7 +7,7 @@ from extract_features import extractFeatures
 # The models were trained with 13, 20, 30
 num_MFCC_coeffs = 30
 
-csv = pd.read_csv("features/ravdess_speech_metadata.csv")
+csv = pd.read_csv("features/ravdess_song_metadata.csv")
 
 allFeatures = []
 for i, row in csv.iterrows():
@@ -15,4 +15,4 @@ for i, row in csv.iterrows():
     allFeatures.append(data)
 
 featureMatrix = np.vstack(allFeatures)
-np.save("features/featureMatrix30Coeffs", featureMatrix)
+np.save("features/featuresSUNG", featureMatrix)

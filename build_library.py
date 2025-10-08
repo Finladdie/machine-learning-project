@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-root = "E:/RAVDESS_dataset/Audio_Speech_Actors_01-24"
+root = "E:/RAVDESS_dataset/Audio_Song_Actors_01-24"
 rows = []
 idx = 0
 # First we organize our dataset into a dataframe
@@ -32,5 +32,5 @@ for actor in os.listdir(root):
         idx += 1
 
 df = pd.DataFrame(rows)
-df.to_csv("features/ravdess_speech_metadata.csv", index=False)
+df.to_csv("features/ravdess_song_metadata.csv", index=False)
     
